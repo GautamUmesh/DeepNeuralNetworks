@@ -26,6 +26,5 @@ for i=1:10
     size(inputTest)
     size(labelTrain)
     size(labelTest)
-    pause;
     acc(i,1) = stackedAE(inputTrain, labelTrain, inputTest, labelTest);
 end
