@@ -1,3 +1,4 @@
 Ufunctions/*
 liblinear-1.94/*
+mnist/*.data
 .DS_Store
