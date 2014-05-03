@@ -21,8 +21,8 @@ function [acc] = stackedAE(trainData, trainLabels, testData, testLabels)
 
 inputSize = 28 * 28;
 numClasses = 10;
-hiddenSizeL1 = 500;    % Layer 1 Hidden Size
-hiddenSizeL2 = 200;    % Layer 2 Hidden Size
+hiddenSizeL1 = 392;    % Layer 1 Hidden Size
+hiddenSizeL2 = 196;    % Layer 2 Hidden Size
 sparsityParam = 0.1;   % desired average activation of the hidden units.
 % (This was denoted by the Greek alphabet rho, which looks like a lower-case "p",
 %  in the lecture notes).
