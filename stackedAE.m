@@ -1,4 +1,4 @@
-function [acc] = stackedAE(trainData, trainLabels, testData, testLabels)
+% function [acc] = stackedAE(trainData, trainLabels, testData, testLabels)
 %% CS294A/CS294W Stacked Autoencoder Exercise
 
 %  Instructions
@@ -22,9 +22,9 @@ function [acc] = stackedAE(trainData, trainLabels, testData, testLabels)
 inputSize = 28 * 28;
 numClasses = 10;
 hiddenSizeL1 = 392;    % Layer 1 Hidden Size
-hiddenSizeL2 = 196;    % Layer 2 Hidden Size
-hiddenSizeL3 = 98;     % Layer 3 Hidden Size
-hiddenSizeL4 = 49;     % Layer 4 Hidden Size
+% hiddenSizeL2 = 196;    % Layer 2 Hidden Size
+% hiddenSizeL3 = 98;     % Layer 3 Hidden Size
+% hiddenSizeL4 = 49;     % Layer 4 Hidden Size
 sparsityParam = 0.1;   % desired average activation of the hidden units.
 % (This was denoted by the Greek alphabet rho, which looks like a lower-case "p",
 %  in the lecture notes).
@@ -37,10 +37,10 @@ beta = 3;              % weight of sparsity penalty term
 %  This loads our training data from the MNIST database files.
 
 % Load MNIST database files
-% trainData = loadMNISTImages('mnist/train-images-idx3-ubyte');
-% trainLabels = loadMNISTLabels('mnist/train-labels-idx1-ubyte');
-%
-% trainLabels(trainLabels == 0) = 10; % Remap 0 to 10 since our labels need to start from 1
+trainData = loadMNISTImages('mnist/train-images-idx3-ubyte');
+trainLabels = loadMNISTLabels('mnist/train-labels-idx1-ubyte');
+
+trainLabels(trainLabels == 0) = 10; % Remap 0 to 10 since our labels need to start from 1
 
 %%======================================================================
 %% STEP 2: Train the first sparse autoencoder
@@ -88,7 +88,7 @@ options.display = 'on';
     inputSize, trainData);
 
 %  Randomly initialize the parameters
-sae2Theta = initializeParameters(hiddenSizeL2, hiddenSizeL1);
+% sae2Theta = initializeParameters(hiddenSizeL2, hiddenSizeL1);
 
 %% ---------------------- YOUR CODE HERE  ---------------------------------
 %  Instructions: Train the second layer sparse autoencoder, this layer has
@@ -97,11 +97,11 @@ sae2Theta = initializeParameters(hiddenSizeL2, hiddenSizeL1);
 %
 %                You should store the optimal parameters in sae2OptTheta
 
-[sae2OptTheta, cost] = minFunc( @(p) sparseAutoencoderCost(p, ...
-    hiddenSizeL1, hiddenSizeL2, ...
-    lambda, sparsityParam, ...
-    beta, sae1Features), ...
-    sae2Theta, options);
+% [sae2OptTheta, cost] = minFunc( @(p) sparseAutoencoderCost(p, ...
+%     hiddenSizeL1, hiddenSizeL2, ...
+%     lambda, sparsityParam, ...
+%     beta, sae1Features), ...
+%     sae2Theta, options);
 % -------------------------------------------------------------------------
 
 
@@ -111,33 +111,33 @@ sae2Theta = initializeParameters(hiddenSizeL2, hiddenSizeL1);
 %  If you've correctly implemented softmaxCost.m, you don't need
 %  to change anything here.
 
-[sae2Features] = feedForwardAutoencoder(sae2OptTheta, hiddenSizeL2, ...
-    hiddenSizeL1, sae1Features);
-
-sae3Theta = initializeParameters(hiddenSizeL3, hiddenSizeL2);
-
-[sae3OptTheta, cost] = minFunc( @(p) sparseAutoencoderCost(p, ...
-    hiddenSizeL2, hiddenSizeL3, ...
-    lambda, sparsityParam, ...
-    beta, sae2Features), ...
-    sae3Theta, options);
-
-[sae3Features] = feedForwardAutoencoder(sae3OptTheta, hiddenSizeL3, ...
-    hiddenSizeL2, sae2Features);
-
-sae4Theta = initializeParameters(hiddenSizeL4, hiddenSizeL3);
-
-[sae4OptTheta, cost] = minFunc( @(p) sparseAutoencoderCost(p, ...
-    hiddenSizeL3, hiddenSizeL4, ...
-    lambda, sparsityParam, ...
-    beta, sae3Features), ...
-    sae4Theta, options);
-
-[sae4Features] = feedForwardAutoencoder(sae4OptTheta, hiddenSizeL4, ...
-    hiddenSizeL3, sae3Features);
+% [sae2Features] = feedForwardAutoencoder(sae2OptTheta, hiddenSizeL2, ...
+%     hiddenSizeL1, sae1Features);
+% 
+% sae3Theta = initializeParameters(hiddenSizeL3, hiddenSizeL2);
+% 
+% [sae3OptTheta, cost] = minFunc( @(p) sparseAutoencoderCost(p, ...
+%     hiddenSizeL2, hiddenSizeL3, ...
+%     lambda, sparsityParam, ...
+%     beta, sae2Features), ...
+%     sae3Theta, options);
+% 
+% [sae3Features] = feedForwardAutoencoder(sae3OptTheta, hiddenSizeL3, ...
+%     hiddenSizeL2, sae2Features);
+% 
+% sae4Theta = initializeParameters(hiddenSizeL4, hiddenSizeL3);
+% 
+% [sae4OptTheta, cost] = minFunc( @(p) sparseAutoencoderCost(p, ...
+%     hiddenSizeL3, hiddenSizeL4, ...
+%     lambda, sparsityParam, ...
+%     beta, sae3Features), ...
+%     sae4Theta, options);
+% 
+% [sae4Features] = feedForwardAutoencoder(sae4OptTheta, hiddenSizeL4, ...
+%     hiddenSizeL3, sae3Features);
 
 %  Randomly initialize the parameters
-saeSoftmaxTheta = 0.005 * randn(hiddenSizeL4 * numClasses, 1);
+saeSoftmaxTheta = 0.005 * randn(hiddenSizeL1 * numClasses, 1);
 
 
 %% ---------------------- YOUR CODE HERE  ---------------------------------
@@ -152,8 +152,8 @@ saeSoftmaxTheta = 0.005 * randn(hiddenSizeL4 * numClasses, 1);
 
 lambda = 1e-4;
 options.maxIter = 100;
-softmaxModel = softmaxTrain(hiddenSizeL4, numClasses, lambda, ...
-    sae4Features, trainLabels, options);
+softmaxModel = softmaxTrain(hiddenSizeL1, numClasses, lambda, ...
+    sae1Features, trainLabels, options);
 % -------------------------------------------------------------------------
 
 saeSoftmaxOptTheta = softmaxModel.optTheta(:);
@@ -165,19 +165,19 @@ saeSoftmaxOptTheta = softmaxModel.optTheta(:);
 % then run this cell.
 
 % Initialize the stack using the parameters learned
-stack = cell(4,1);
+stack = cell(1,1);
 stack{1}.w = reshape(sae1OptTheta(1:hiddenSizeL1*inputSize), ...
     hiddenSizeL1, inputSize);
 stack{1}.b = sae1OptTheta(2*hiddenSizeL1*inputSize+1:2*hiddenSizeL1*inputSize+hiddenSizeL1);
-stack{2}.w = reshape(sae2OptTheta(1:hiddenSizeL2*hiddenSizeL1), ...
-    hiddenSizeL2, hiddenSizeL1);
-stack{2}.b = sae2OptTheta(2*hiddenSizeL2*hiddenSizeL1+1:2*hiddenSizeL2*hiddenSizeL1+hiddenSizeL2);
-stack{3}.w = reshape(sae3OptTheta(1:hiddenSizeL3*hiddenSizeL2), ...
-    hiddenSizeL3, hiddenSizeL2);
-stack{3}.b = sae3OptTheta(2*hiddenSizeL3*hiddenSizeL2+1:2*hiddenSizeL3*hiddenSizeL2+hiddenSizeL3);
-stack{4}.w = reshape(sae4OptTheta(1:hiddenSizeL4*hiddenSizeL3), ...
-    hiddenSizeL4, hiddenSizeL3);
-stack{4}.b = sae4OptTheta(2*hiddenSizeL4*hiddenSizeL3+1:2*hiddenSizeL4*hiddenSizeL3+hiddenSizeL4);
+% stack{2}.w = reshape(sae2OptTheta(1:hiddenSizeL2*hiddenSizeL1), ...
+%     hiddenSizeL2, hiddenSizeL1);
+% stack{2}.b = sae2OptTheta(2*hiddenSizeL2*hiddenSizeL1+1:2*hiddenSizeL2*hiddenSizeL1+hiddenSizeL2);
+% stack{3}.w = reshape(sae3OptTheta(1:hiddenSizeL3*hiddenSizeL2), ...
+%     hiddenSizeL3, hiddenSizeL2);
+% stack{3}.b = sae3OptTheta(2*hiddenSizeL3*hiddenSizeL2+1:2*hiddenSizeL3*hiddenSizeL2+hiddenSizeL3);
+% stack{4}.w = reshape(sae4OptTheta(1:hiddenSizeL4*hiddenSizeL3), ...
+%     hiddenSizeL4, hiddenSizeL3);
+% stack{4}.b = sae4OptTheta(2*hiddenSizeL4*hiddenSizeL3+1:2*hiddenSizeL4*hiddenSizeL3+hiddenSizeL4);
 % Initialize the parameters for the deep model
 [stackparams, netconfig] = stack2params(stack);
 stackedAETheta = [ saeSoftmaxOptTheta ; stackparams ];
@@ -193,7 +193,7 @@ stackedAETheta = [ saeSoftmaxOptTheta ; stackparams ];
 % -------------------------------------------------------------------------
 
 [stackedAEOptTheta, cost] = minFunc( @(p) stackedAECost(p, ...
-    inputSize, hiddenSizeL4, ...
+    inputSize, hiddenSizeL1, ...
     numClasses, netconfig, ...
     lambda, trainData, trainLabels), ...
     stackedAETheta, options);
@@ -206,18 +206,18 @@ stackedAETheta = [ saeSoftmaxOptTheta ; stackparams ];
 
 % Get labelled test images
 % Note that we apply the same kind of preprocessing as the training set
-% testData = loadMNISTImages('mnist/t10k-images-idx3-ubyte');
-% testLabels = loadMNISTLabels('mnist/t10k-labels-idx1-ubyte');
-%
-% testLabels(testLabels == 0) = 10; % Remap 0 to 10
+testData = loadMNISTImages('mnist/t10k-images-idx3-ubyte');
+testLabels = loadMNISTLabels('mnist/t10k-labels-idx1-ubyte');
 
-[pred] = stackedAEPredict(stackedAETheta, inputSize, hiddenSizeL4, ...
+testLabels(testLabels == 0) = 10; % Remap 0 to 10
+
+[pred] = stackedAEPredict(stackedAETheta, inputSize, hiddenSizeL1, ...
     numClasses, netconfig, testData);
 
 acc = mean(testLabels(:) == pred(:));
 fprintf('Before Finetuning Test Accuracy: %0.3f%%\n', acc * 100);
 
-[pred] = stackedAEPredict(stackedAEOptTheta, inputSize, hiddenSizeL4, ...
+[pred] = stackedAEPredict(stackedAEOptTheta, inputSize, hiddenSizeL1, ...
     numClasses, netconfig, testData);
 
 acc = mean(testLabels(:) == pred(:));
@@ -233,4 +233,4 @@ fprintf('After Finetuning Test Accuracy: %0.3f%%\n', acc * 100);
 % your code for errors, and make sure you are training on the
 % entire data set of 60000 28x28 training images
 % (unless you modified the loading code, this should be the case)
-end
+% end
