@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2012)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: egpaper.aux
+The style file: ieee.bst
+Database file #1: egbib.bib
+Warning--empty booktitle in Fahlman:1990:CLA:109230.107380
+You've used 11 entries,
+            2120 wiz_defined-function locations,
+            594 strings with 6702 characters,
+and the built_in function-call counts, 5014 in all, are:
+= -- 519
+> -- 236
+< -- 6
++ -- 92
+- -- 80
+* -- 368
+:= -- 784
+add.period$ -- 40
+call.type$ -- 11
+change.case$ -- 71
+chr.to.int$ -- 0
+cite$ -- 12
+duplicate$ -- 185
+empty$ -- 372
+format.name$ -- 80
+if$ -- 1082
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 10
+newline$ -- 60
+num.names$ -- 24
+pop$ -- 70
+preamble$ -- 1
+purify$ -- 60
+quote$ -- 0
+skip$ -- 146
+stack$ -- 0
+substring$ -- 383
+swap$ -- 63
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 44
+warning$ -- 1
+while$ -- 48
+width$ -- 13
+write$ -- 136
+(There was 1 warning)
