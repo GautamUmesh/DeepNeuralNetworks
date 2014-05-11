@@ -1,5 +1,7 @@
 Ufunctions/*
 liblinear-1.94/*
+libsvm-3.18/*
 mnist/*.data
+mnist/*.scale*
 .DS_Store
 Images.pptx
